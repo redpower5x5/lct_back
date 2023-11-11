@@ -1,0 +1,16 @@
+# ultralytics
+fastapi
+fastapi_cache2
+python-jose
+loguru
+passlib
+psycopg2_binary
+pydantic
+pydantic[email]
+pydantic_settings
+python-dotenv
+redis
+Requests
+SQLAlchemy
+uvicorn
+python-multipart

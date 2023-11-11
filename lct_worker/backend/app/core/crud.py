@@ -148,6 +148,7 @@ def get_cam_actions(db: Session, cam_id: int) -> Union[response_schemas.CamActio
                     db_models.CamDetections.id.label("id"),
                     db_models.CamDetections.cam_id.label("cam_id"),
                     db_models.CamDetections.time_detected.label("time_detected"),
+                    db_models.CamDetections.frame.label("frame"),
                     db_models.CamDetections.comment.label("comment"),
                     db_models.CamDetections.detection.label("detection"),
                     db_models.CamDetections.precision.label("precision"),

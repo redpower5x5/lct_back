@@ -20,9 +20,10 @@ router = APIRouter(
 
 @router.post("/addfile", response_model=response_schemas.Video)
 async def add_file(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     current_user: response_schemas.User = Depends(get_current_active_user),
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db)
 ):
     """
     Add a file
@@ -43,7 +44,7 @@ async def add_file(
         )
     finally:
         file.file.close()
-    BackgroundTasks.add_task(run_on_file, path_to_file, db, result.id)
+    background_tasks.add_task(run_on_file, path_to_file, db, result.id)
     log.debug(f"File {file_name} processing started")
 
     return result

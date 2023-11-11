@@ -8,6 +8,7 @@ from app.config import settings
 from app.config import log
 from app.core import crud
 from app.models.models import VideoAction
+from sqlalchemy.orm import Session
 
 colors = {
     0: (255,0,0),
@@ -22,7 +23,7 @@ colors = {
 }
 model = YOLO('app/ai/yolov8s_custom.pt')
 
-def run_on_file(file_path, db, video_id):
+def run_on_file(file_path: str, db: Session, video_id: int):
     capture = cv2.VideoCapture(file_path)
     success = True
     count = 0

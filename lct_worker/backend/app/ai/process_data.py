@@ -20,7 +20,7 @@ colors = {
     7: (200,150,200),
     8: (40, 30, 50)
 }
-model = YOLO('yolov8s_custom.pt')
+model = YOLO('app/ai/yolov8s_custom.pt')
 
 def run_on_file(file_path, db, video_id):
     capture = cv2.VideoCapture(file_path)

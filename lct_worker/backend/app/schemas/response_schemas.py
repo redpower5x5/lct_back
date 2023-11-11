@@ -1,5 +1,5 @@
 from typing import Optional, List, Dict, Union
-from pydantic import BaseModel, Field, EmailStr, validator, ConfigDict
+from pydantic import BaseModel, Field, EmailStr, validator, ConfigDict,
 from decimal import Decimal
 
 
@@ -26,8 +26,8 @@ class Cam(BaseModel):
 
     id: int | None = None
     address: str
-    longitude: Decimal
-    latitude: Decimal
+    longitude: float
+    latitude: float
     rtsp_link: str
 
 class Video(BaseModel):

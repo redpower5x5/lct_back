@@ -38,7 +38,7 @@ def run_on_file(file_path: str, db: Session, video_id: int):
         cut_img = img.copy()
         detection = False
         frame_info = {}
-        if count % 5 == 0:
+        if count % 100 == 0:
             result = model(img, imgsz=1280)
             bboxes = []
             for res in result:
@@ -50,7 +50,7 @@ def run_on_file(file_path: str, db: Session, video_id: int):
                         if conf > 0.75:
                             detection = True
                             detection_info = {
-                                'class': labels[cls],
+                                'class': cls,
                                 'confidence': conf,
                             }
                     bboxes.append(((int(x1), int(y1)), (int(x2), int(y2))))
@@ -70,7 +70,7 @@ def run_on_file(file_path: str, db: Session, video_id: int):
                     video_id=video_id,
                     time_detected=time,
                     comment=comment,
-                    detection=detection_info['class'],
+                    detection=labels[detection_info['class']],
                     precision=detection_info['confidence'],
                     frame=jpg_as_text
                 )

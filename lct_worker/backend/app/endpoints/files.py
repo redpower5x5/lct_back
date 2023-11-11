@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 
 from sqlalchemy.orm import Session
 
@@ -8,6 +8,7 @@ from app.core.dependencies import get_db
 from app.core import crud
 from app.config import settings
 from app.utils.token import get_current_active_user
+from app.ai.process_data import run_on_file
 from fastapi import File, UploadFile
 import os
 
@@ -34,6 +35,9 @@ async def add_file(
             while contents := file.file.read(1024 * 1024):
                 f.write(contents)
         result = crud.add_video(db=db, video_file_path=file_name, user_id=current_user.id)
+        log.debug(f"File {file_name} uploaded")
+        BackgroundTasks.add_task(run_on_file, path_to_file, db, result.id)
+        log.debug(f"File {file_name} processing started")
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

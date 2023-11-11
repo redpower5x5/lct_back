@@ -1,4 +1,4 @@
-# ultralytics
+ultralytics
 fastapi
 fastapi_cache2
 python-jose

@@ -11,6 +11,9 @@ RUN add-apt-repository ppa:deadsnakes/ppa && \
         python3.10 \
         python3.10-distutils \
         libglib2.0-0 \
+        ffmpeg \
+        libsm6 \
+        libxext6 \
         curl
 
 # Upgrade pip

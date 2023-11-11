@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     DATABASE_URI: Optional[PostgresDsn] = None
     UPLOAD_FOLDER: str = "app/storage"
+    FRAMES_FOLDER: str = "app/frames"
 
     REDIS_URI: str = "redis://redis:6379"
     CACHE_EXPIRE: int = 30

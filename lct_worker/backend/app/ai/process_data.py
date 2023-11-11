@@ -21,6 +21,10 @@ colors = {
     7: (200,150,200),
     8: (40, 30, 50)
 }
+labels = {
+    0: 'Мобильная точка продажи',
+    1: 'Продавец'
+}
 model = YOLO('app/ai/yolov8s_custom.pt')
 
 def run_on_file(file_path: str, db: Session, video_id: int):
@@ -46,7 +50,7 @@ def run_on_file(file_path: str, db: Session, video_id: int):
                         if conf > 0.75:
                             detection = True
                             detection_info = {
-                                'class': cls,
+                                'class': labels[cls],
                                 'confidence': conf,
                             }
                     bboxes.append(((int(x1), int(y1)), (int(x2), int(y2))))

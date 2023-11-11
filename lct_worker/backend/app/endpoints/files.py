@@ -36,8 +36,6 @@ async def add_file(
                 f.write(contents)
         result = crud.add_video(db=db, video_file_path=file_name, user_id=current_user.id)
         log.debug(f"File {file_name} uploaded")
-        BackgroundTasks.add_task(run_on_file, path_to_file, db, result.id)
-        log.debug(f"File {file_name} processing started")
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -45,6 +43,8 @@ async def add_file(
         )
     finally:
         file.file.close()
+    BackgroundTasks.add_task(run_on_file, path_to_file, db, result.id)
+    log.debug(f"File {file_name} processing started")
 
     return result
 

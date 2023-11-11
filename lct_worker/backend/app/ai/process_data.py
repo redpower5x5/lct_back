@@ -35,7 +35,7 @@ def run_on_file(file_path: str, db: Session, video_id: int):
         detection = False
         frame_info = {}
         if count % 5 == 0:
-            result = model(img, size=1280)
+            result = model(img, imgsz=1280)
             bboxes = []
             for res in result:
                 for obj in res:

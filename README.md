@@ -35,6 +35,12 @@ docker-compose up
 
 После выполнения этих команд, API будет доступен по адресу `http://localhost:3333`.
 
+## Доступ
+
+вы можете авторизоваться на нашей платформе [https://lct.onixx.ru](https://lct.onixx.ru)
+Логин: stepovoy.dev@gmail.com
+Пароль: admin
+
 ## Документация
 
 Вы можете просмотреть полную документацию к нашему API, используя Swagger по адресу: [https://lctapi.onixx.ru/docs](https://lctapi.onixx.ru/docs).

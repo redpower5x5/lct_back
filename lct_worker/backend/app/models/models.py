@@ -22,7 +22,7 @@ class CamAction(BaseModel):
     time_detected: str
     comment: str
     detection: str
-    precision: Decimal
+    precision: float
     frame: str
 
 class VideoAction(BaseModel):
@@ -33,5 +33,5 @@ class VideoAction(BaseModel):
     time_detected: str
     comment: str
     detection: str
-    precision: Decimal
+    precision: float
     frame: str

@@ -17,12 +17,12 @@
 
 1. Клонировать репозиторий:
 ```
-git clone блаблабла
+git clone https://github.com/redpower5x5/lct_back
 ```
 
 2. Перейдите в директорию проекта бэкенда:
 ```
-cd backend
+cd lct_worker
 ```
 
 3. Запустите проект с помощью Docker Compose:

@@ -5,6 +5,7 @@ python-jose
 loguru
 passlib
 psycopg2_binary
+sse-starlette
 pydantic
 pydantic[email]
 pydantic_settings

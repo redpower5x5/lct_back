@@ -9,7 +9,10 @@ from app.core import crud
 from app.config import settings
 from app.utils.token import get_current_active_user
 from app.ai.process_data import run_on_file
-from fastapi import File, UploadFile
+from fastapi import File, UploadFile, Request
+from sse_starlette.sse import EventSourceResponse
+from app.utils.latest_action import latest_action, purge_latest_action_cache
+import asyncio
 import os
 
 router = APIRouter(
@@ -86,3 +89,45 @@ async def get_file_actions(
     Get all actions for file
     """
     return crud.get_user_video_actions(db=db, video_id=file_id, user_id=current_user.id)
+
+@router.get("/getfile/{file_id}/actions/stream", response_model=response_schemas.VideoAction)
+async def actions_stream(
+   file_id: int,
+    current_user: response_schemas.User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+    request: Request
+):
+    """
+    Get actions for file
+    """
+    async def event_generator():
+        while True:
+            # If client was closed the connection
+            if await request.is_disconnected():
+                purge_latest_action_cache(user_id=current_user.id, video_id=file_id)
+                break
+
+            # Checks for new actions and return them to client if any
+            latest_aciton = latest_action(db=db, user_id=current_user.id, video_id=file_id)
+            if latest_aciton:
+                yield latest_aciton
+
+            await asyncio.sleep(settings.MESSAGE_STREAM_DELAY)
+
+    return EventSourceResponse(event_generator())
+
+@router.get("/getfile/{file_id}/action/{action_id}/frame", response_model=response_schemas.VideoActionFrame)
+async def get_file_action_frame(
+    file_id: int,
+    action_id: int,
+    current_user: response_schemas.User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Get frame for action
+    """
+    return crud.get_action_frame(
+        db=db,
+        user_id=current_user.id,
+        video_id=file_id, action_id=action_id
+    )

@@ -258,11 +258,44 @@ def get_user_video_actions(db: Session, user_id: int, video_id: int) -> Union[re
                     db_models.VideoDetections.comment.label("comment"),
                     db_models.VideoDetections.detection.label("detection"),
                     db_models.VideoDetections.precision.label("precision"),
-                    db_models.VideoDetections.frame.label("frame"),
                 ).filter(
                     db_models.VideoDetections.video_id == video_id
                 ).all()
             ],
+        )
+    except NoResultFound:
+        return None
+
+def get_latest_action(db: Session, user_id: int, video_id: int) -> Union[response_schemas.VideoAction, None]:
+    try:
+        return response_schemas.VideoAction.model_validate(
+            db.query(
+                db_models.VideoDetections.id.label("id"),
+                db_models.VideoDetections.video_id.label("video_id"),
+                db_models.VideoDetections.time_detected.label("time_detected"),
+                db_models.VideoDetections.comment.label("comment"),
+                db_models.VideoDetections.detection.label("detection"),
+                db_models.VideoDetections.precision.label("precision"),
+            ).filter(
+                db_models.VideoDetections.video_id == video_id
+            ).order_by(
+                db_models.VideoDetections.id.desc()
+            ).first()
+        )
+    except NoResultFound:
+        return None
+
+def get_action_frame(db: Session, user_id: int, video_id: int, action_id: int) -> Union[response_schemas.VideoActionFrame, None]:
+    try:
+        return response_schemas.VideoActionFrame(
+            id=action_id,
+            video_id=video_id,
+            frame=db.query(
+                    db_models.VideoDetections.frame.label("frame"),
+                ).filter(
+                    db_models.VideoDetections.video_id == video_id,
+                    db_models.VideoDetections.id == action_id
+                ).one()[0],
         )
     except NoResultFound:
         return None

@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     DATABASE_URI: Optional[PostgresDsn] = None
     UPLOAD_FOLDER: str = "app/storage"
     FRAMES_FOLDER: str = "app/frames"
+    MESSAGE_STREAM_DELAY: int = 1  # second
+    MESSAGE_STREAM_RETRY_TIMEOUT: int = 15000  # milisecond
 
     REDIS_URI: str = "redis://redis:6379"
     CACHE_EXPIRE: int = 30

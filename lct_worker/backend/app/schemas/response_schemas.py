@@ -64,6 +64,12 @@ class VideoAction(BaseModel):
     precision: Decimal
     time_detected: str
     comment: str
+
+class VideoActionFrame(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int | None = None
+    video_id: int
     frame: str
 
 class VideoActionsList(BaseModel):

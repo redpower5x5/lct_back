@@ -92,10 +92,10 @@ async def get_file_actions(
 
 @router.get("/getfile/{file_id}/actions/stream", response_model=response_schemas.VideoAction)
 async def actions_stream(
-   file_id: int,
+    request: Request,
+    file_id: int,
     current_user: response_schemas.User = Depends(get_current_active_user),
-    db: Session = Depends(get_db),
-    request: Request
+    db: Session = Depends(get_db)
 ):
     """
     Get actions for file

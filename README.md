@@ -38,7 +38,7 @@ docker-compose up
 ## Доступ
 
 вы можете авторизоваться на нашей платформе [https://lct.onixx.ru](https://lct.onixx.ru)
-Логин: stepovoy.dev@gmail.com
+Логин: stepovoy.dev@edu.misis.ru
 Пароль: admin
 
 ## Документация
